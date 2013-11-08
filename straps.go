@@ -91,8 +91,8 @@ type xmlStraps struct {
 
 // straps maintains a cache of items found in the straps.xml file
 type straps struct {
-	StrapMap        map[string]string // The map of strap key value pairs
-	EnvironmentName string            // The environment to use
+	strapMap        map[string]string // The map of strap key value pairs
+	environmentName string            // The environment to use
 }
 
 //** SINGLETON REFERENCE
@@ -146,19 +146,19 @@ func Load(environmentVariable string, relativeGoPathLocation string) {
 
 	// Create a straps object
 	_This = &straps{
-		StrapMap: make(map[string]string),
+		strapMap: make(map[string]string),
 	}
 
 	// Store the key/value pairs for each strap
 	for _, strap := range xmlStraps {
-		_This.StrapMap[strap.Key] = strap.Value
+		_This.strapMap[strap.Key] = strap.Value
 	}
 }
 
 // Exists returns true if the key exists else false
 //  key: The key lookup string defined in the straps file
 func Exists(key string) (found bool) {
-	_, found = _This.StrapMap[key]
+	_, found = _This.strapMap[key]
 
 	return found
 }
@@ -166,7 +166,7 @@ func Exists(key string) (found bool) {
 // Strap returns the value for the specified key
 //  key: The key lookup string defined in the straps file
 func Strap(key string) string {
-	strap, found := _This.StrapMap[key]
+	strap, found := _This.strapMap[key]
 
 	if found == false {
 		panic("Unable To Locate Key")
@@ -182,7 +182,7 @@ func StrapRegexp(keyRegexp string) (matches []string) {
 
 	find := regexp.MustCompile(keyRegexp)
 
-	for key, value := range _This.StrapMap {
+	for key, value := range _This.strapMap {
 		if find.MatchString(key) == true {
 			matches = append(matches, value)
 		}
