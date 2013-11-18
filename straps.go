@@ -67,37 +67,41 @@ import (
 	"strings"
 )
 
-//** NEW TYPES
+//** PACKAGE VARIABLES
 
-// xmlStrap maps each strap node in the straps.xml document
-type xmlStrap struct {
-	XMLName xml.Name `xml:"strap"`
-	Key     string   `xml:"key,attr"`
-	Value   string   `xml:"value,attr"`
-}
+var (
+	_This *straps // A reference to the singleton
+)
 
-// xmlEnv maps each set of specified environment straps
-type xmlEnv struct {
-	XMLName xml.Name   `xml:"env"`
-	Name    string     `xml:"name,attr"`
-	Straps  []xmlStrap `xml:"strap"`
-}
+//** TYPES
 
-// xmlStraps maps all the straps
-type xmlStraps struct {
-	XMLName      xml.Name `xml:"straps"`
-	Environments []xmlEnv `xml:"env"`
-}
+type (
+	// xmlStrap maps each strap node in the straps.xml document
+	xmlStrap struct {
+		XMLName xml.Name `xml:"strap"`
+		Key     string   `xml:"key,attr"`
+		Value   string   `xml:"value,attr"`
+	}
 
-// straps maintains a cache of items found in the straps.xml file
-type straps struct {
-	strapMap        map[string]string // The map of strap key value pairs
-	environmentName string            // The environment to use
-}
+	// xmlEnv maps each set of specified environment straps
+	xmlEnv struct {
+		XMLName xml.Name   `xml:"env"`
+		Name    string     `xml:"name,attr"`
+		Straps  []xmlStrap `xml:"strap"`
+	}
 
-//** SINGLETON REFERENCE
+	// xmlStraps maps all the straps
+	xmlStraps struct {
+		XMLName      xml.Name `xml:"straps"`
+		Environments []xmlEnv `xml:"env"`
+	}
 
-var _This *straps // A reference to the singleton
+	// straps maintains a cache of items found in the straps.xml file
+	straps struct {
+		strapMap        map[string]string // The map of strap key value pairs
+		environmentName string            // The environment to use
+	}
+)
 
 //** PUBLIC FUNCTIONS
 
