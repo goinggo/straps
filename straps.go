@@ -197,7 +197,7 @@ func StrapInt(key string) int {
 // mustReadStraps reads the straps.xml file and decodes the XML.
 func mustReadStraps(reader io.Reader, environmentVariable string) []xmlStrap {
 	var xmlStraps xmlStraps
-	if err := xml.NewDecoder(reader).Decode(xmlStraps); err != nil {
+	if err := xml.NewDecoder(reader).Decode(&xmlStraps); err != nil {
 		panic("Unable To Read Staps File")
 	}
 
